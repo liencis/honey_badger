@@ -1,14 +1,53 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import reactLogo from './assets/react.svg'
 import viteLogo from './assets/vite.svg'
 import heroImg from './assets/hero.png'
 import hexaBee from './assets/hexaBee.svg'
 import Cell from './Cell'
+import { gameSetup } from './setup/grid';
+import type { CellInfo } from './setup/grid';
+import CellsGrid from './CellsGrid';
 
 import './App.css'
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [count, setCount] = useState(0);
+  const row = 6;
+  const col = 6;
+  const game = gameSetup(row,col);
+  const [cells, setCells] = useState<Map<number, CellInfo>>(game);
+
+  interface CellClickEvent extends React.MouseEvent<HTMLButtonElement> {
+    target: HTMLButtonElement & { value: string };
+  } 
+
+  const handleOpenCell = (info: CellInfo): void => {
+
+    console.log("Cell number clicked:", info);
+    if (info) {
+      info.open = true;
+      const newMap = new Map(cells);
+      newMap.set(Number(info.number), info);
+      setCells(newMap);
+    }
+  }
+
+
+  // Object.entries(cells) DOES NOT WORK!
+  // const Cells = [...cells].map(([key, value]) => {
+  //   const item = `Item ${key} ${JSON.stringify(value)}`;
+  //   return (<Cell cellInfo={value}/>)
+  // })
+
+  // useEffect(() => {
+  //   try {
+  //     const game = gameSetup(row,col);
+  //     setCells(game);
+  //     return game.clear();
+  //   } catch (e) {
+  //     console.error(e)
+  //   }
+  // }, [])
 
   return (
     <>
@@ -24,14 +63,34 @@ function App() {
             Edit <code>src/App.tsx</code> and save to test <code>HMR</code>
           </p>
         </div>
-        <button
-          className="counter"
-          onClick={() => setCount((count) => count + 1)}
-        >
-          Count is {count}
-        </button>
-        <Cell/>
-        <Cell/>
+        <ul>
+          <li value={0}>
+            <div
+            className="counter"
+            onClick={() => setCount((count) => count + 1)}
+            >
+              Count is {count}
+            </div>
+          </li>
+          <li value={1}>
+            <div
+            className="counter"
+            onClick={() => setCount((count) => count + 1)}
+            >
+              Count is {count}
+            </div>
+          </li>
+          <li value={2}>
+            <div
+            className="counter"
+            onClick={() => setCount((count) => count + 1)}
+            >
+              Count is {count}
+            </div>
+          </li>
+        </ul>
+        <p>PPP {JSON.stringify(cells.get(1))}</p>
+        <CellsGrid cells={cells} row={row} col={col} setCell={setCells}/>
       </section>
 
       <div className="ticks"></div>
