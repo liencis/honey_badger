@@ -6,6 +6,13 @@ type CellInfo = {
     bee: boolean;
 };
 
+const enum Level {
+  easy = 8,
+  normal = 6,
+  hard = 5,
+  bad = 4,
+}
+
 function createGrid(rows: number, cols: number): [(number)[][], number] {
   let grid: (number)[][] = Array.from({ length: rows }, () => Array(cols).fill(0));
   let num: number = 1;
@@ -66,18 +73,20 @@ function getEdges(grid: (number)[][]): Map<number, CellInfo> {
   return edges;
 }
 
-function asignBees(edges: Map<number, CellInfo>, numberOfCells: number, numBees: number): number[] {
-    let beesList: number[] = [];
-    while (numBees > 0) {
-        let randomCellNumber = Math.floor(Math.random() * numberOfCells) + 1;
-        const cellInfo = edges.get(randomCellNumber);
-        if (cellInfo && !cellInfo.bee) {
-            cellInfo.bee = true;
-            beesList.push(randomCellNumber);
-            numBees--;
-        }
-    }
-    return beesList;
+function asignBees(edges: Map<number, CellInfo>, numberOfCells: number, level: Level = Level.easy): number[] {
+  // to prevent infinite loop we calculate number of bees to avaid bad(to big) number pased.
+  let numBees = Math.ceil(edges.size / level);
+  let beesList: number[] = [];
+  while (numBees > 0) {
+      let randomCellNumber = Math.floor(Math.random() * numberOfCells) + 1;
+      const cellInfo = edges.get(randomCellNumber);
+      if (cellInfo && !cellInfo.bee) {
+          cellInfo.bee = true;
+          beesList.push(randomCellNumber);
+          numBees--;
+      }
+  }
+  return beesList;
 }
 
 function asignCellValue(edges: Map<number, CellInfo>, beePlacement: number[]): void {
@@ -109,13 +118,24 @@ function openCell(cellNumber: number, edges: Map<number, CellInfo>): void {
     }
 }
 
-const [grid, numberOfCells] = createGrid(16, 30);
-const edges = getEdges(grid);
-const beePlacement = asignBees(edges, numberOfCells, 50);
-asignCellValue(edges, beePlacement);
-// start to play game by opening a cell, for example:
-openCell(15, edges);
-console.log(grid);
-console.log(edges);
-console.log(beePlacement);
-console.log(edges);
+// const [grid, numberOfCells] = createGrid(16, 30);
+// const edges = getEdges(grid);
+// const beePlacement = asignBees(edges, numberOfCells, 50);
+// asignCellValue(edges, beePlacement);
+// // start to play game by opening a cell, for example:
+// openCell(15, edges);
+// console.log(grid);
+// console.log(edges);
+// console.log(beePlacement);
+// console.log(edges);
+
+function gameSetup(row: number, col: number): Map<number, CellInfo> {
+  const [grid, numberOfCells] = createGrid(row, col);
+  const edges = getEdges(grid);
+  const beePlacement = asignBees(edges, numberOfCells);
+  asignCellValue(edges, beePlacement);
+
+  return edges
+}
+
+console.log(gameSetup(8,8))

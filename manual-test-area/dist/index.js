@@ -1,5 +1,12 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+var Level;
+(function (Level) {
+    Level[Level["easy"] = 8] = "easy";
+    Level[Level["normal"] = 6] = "normal";
+    Level[Level["hard"] = 5] = "hard";
+    Level[Level["bad"] = 4] = "bad";
+})(Level || (Level = {}));
 function createGrid(rows, cols) {
     let grid = Array.from({ length: rows }, () => Array(cols).fill(0));
     let num = 1;
@@ -52,7 +59,9 @@ function getEdges(grid) {
     }
     return edges;
 }
-function asignBees(edges, numberOfCells, numBees) {
+function asignBees(edges, numberOfCells, level = Level.easy) {
+    // to prevent infinite loop we calculate number of bees to avaid bad(to big) number pased.
+    let numBees = Math.ceil(edges.size / level);
     let beesList = [];
     while (numBees > 0) {
         let randomCellNumber = Math.floor(Math.random() * numberOfCells) + 1;
@@ -92,14 +101,22 @@ function openCell(cellNumber, edges) {
         }
     }
 }
-const [grid, numberOfCells] = createGrid(16, 30);
-const edges = getEdges(grid);
-const beePlacement = asignBees(edges, numberOfCells, 50);
-asignCellValue(edges, beePlacement);
-// start to play game by opening a cell, for example:
-openCell(15, edges);
-console.log(grid);
-console.log(edges);
-console.log(beePlacement);
-console.log(edges);
+// const [grid, numberOfCells] = createGrid(16, 30);
+// const edges = getEdges(grid);
+// const beePlacement = asignBees(edges, numberOfCells, 50);
+// asignCellValue(edges, beePlacement);
+// // start to play game by opening a cell, for example:
+// openCell(15, edges);
+// console.log(grid);
+// console.log(edges);
+// console.log(beePlacement);
+// console.log(edges);
+function gameSetup(row, col) {
+    const [grid, numberOfCells] = createGrid(row, col);
+    const edges = getEdges(grid);
+    const beePlacement = asignBees(edges, numberOfCells);
+    asignCellValue(edges, beePlacement);
+    return edges;
+}
+console.log(gameSetup(40, 40));
 //# sourceMappingURL=index.js.map
