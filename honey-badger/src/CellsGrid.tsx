@@ -7,10 +7,11 @@ interface CellsGridProps {
     cells: Map<number, CellInfo>,
     row: number,
     col: number,
-    setCell: Dispatch<SetStateAction<Map<number, CellInfo>>>
+    setCell: Dispatch<SetStateAction<Map<number, CellInfo>>>,
+    setGameOver: Dispatch<SetStateAction<boolean>>
 }
 
-function CellsGrid ({cells, row, col, setCell}: CellsGridProps) {
+function CellsGrid ({cells, row, col, setCell, setGameOver}: CellsGridProps) {
     const rowArray = Array.from({length: row}, (_, i) => i); // Array.from({length: row}, (_, i) => i + 1)
     const colArray = Array.from({length: col}, (_, i) => i);
     let numCellsPlaced = 0;
@@ -34,7 +35,7 @@ function CellsGrid ({cells, row, col, setCell}: CellsGridProps) {
                                 value={numCellsPlaced}
                                 className="cellLi"
                                 >
-                                    <Cell cellInfo={cells.get(numCellsPlaced)} setCell={setCell}/>
+                                    <Cell cellInfo={cells.get(numCellsPlaced)} setCell={setCell} setGameOver={setGameOver}/>
                                 </li>
                         }
                     } else {
@@ -45,7 +46,7 @@ function CellsGrid ({cells, row, col, setCell}: CellsGridProps) {
                                 value={numCellsPlaced}
                                 className="cellLi"
                                 >
-                                    <Cell cellInfo={cells.get(numCellsPlaced)} setCell={setCell}/>
+                                    <Cell cellInfo={cells.get(numCellsPlaced)} setCell={setCell} setGameOver={setGameOver}/>
                                 </li>
                         } else {
                             return <li className="cellLi"></li>
@@ -56,10 +57,6 @@ function CellsGrid ({cells, row, col, setCell}: CellsGridProps) {
             </ul>);
         })
         }
-            {/* <tr>
-                <td><Cell cellInfo={cells.get(1)}/></td>
-                <td><Cell cellInfo={cells.get(2)}/></td>
-            </tr>  */}
         </div>
     );
 }

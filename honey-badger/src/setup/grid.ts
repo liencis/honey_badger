@@ -103,7 +103,9 @@ function asignCellValue(edges: Map<number, CellInfo>, beePlacement: number[]): v
     }
 }
 
-export function openCell(cellNumber: number, edges: Map<number, CellInfo>): void {
+export function openCell(
+  cellNumber: number, 
+  edges: Map<number, CellInfo>): Map<number, CellInfo> {
     const cellInfo = edges.get(cellNumber);
     if (cellInfo) {
         cellInfo.open = true; /// ? this might need to be set at jsx level instead of here, but for now we can set it here
@@ -116,12 +118,14 @@ export function openCell(cellNumber: number, edges: Map<number, CellInfo>): void
             }
         }
     }
+    return edges;
 }
 
-export function openAllCells(edges: Map<number, CellInfo>): void {
+export function openAllCells(edges: Map<number, CellInfo>): Map<number, CellInfo> {
     for (const cellInfo of edges.values()) {
         cellInfo.open = true;
     }
+    return edges;
 }
 
 export function gameSetup(row: number, col: number): Map<number, CellInfo> {
