@@ -9,7 +9,7 @@ import hexa5 from "./assets/hexa5.svg";
 import hexa6 from "./assets/hexa6.svg";
 
 import './App.css'
-import { openAllCells, openCell } from './setup/grid';
+import { openAllCells, openCell, checkWin } from './setup/grid';
 import type { CellInfo } from "./setup/grid";
 import type { Dispatch, SetStateAction } from "react";
 
@@ -17,9 +17,10 @@ interface CellProps {
     cellInfo: CellInfo
     setCell: Dispatch<SetStateAction<Map<number, CellInfo>>>,
     setGameOver: Dispatch<SetStateAction<boolean>>
+    setGameWon: Dispatch<SetStateAction<boolean>>
 }
 
-function Cell({ cellInfo, setCell, setGameOver }: CellProps) {
+function Cell({ cellInfo, setCell, setGameOver, setGameWon }: CellProps) {
 
     const handleClick = () => {
         if (cellInfo.bee) {
@@ -32,12 +33,14 @@ function Cell({ cellInfo, setCell, setGameOver }: CellProps) {
             setCell((prevCells) => {
                 const newCells = new Map(prevCells);
                 openCell(Number(cellInfo.number), newCells);
+                checkWin(newCells) && setGameWon(true);
                 return newCells;
             });
         } else {
             setCell((prevCells) => {
                 const newCells = new Map(prevCells);
                 newCells.set(Number(cellInfo.number), { ...cellInfo, open: true });
+                checkWin(newCells) && setGameWon(true);
                 return newCells;
             });
         };
@@ -47,7 +50,7 @@ function Cell({ cellInfo, setCell, setGameOver }: CellProps) {
         <div onClick={handleClick}>
         <div className="cell">
             { cellInfo.open ? 
-                cellInfo.bee ? <img src={hexaBee} className="hexaBee" alt="One honey cell open" width="80" height="70"/> :
+                cellInfo.bee ? <img src={hexaBee} className="hexaBee" alt="One honey Bee open" width="80" height="70"/> :
                 cellInfo.value === 0 ? <img src={hexaHoney} className="hexaHoney" alt="One honey cell open" width="80" height="70"/> :
                 cellInfo.value === 1 ? <img src={hexa1} className="hexa1" alt="One honey cell open" width="80" height="70"/> :
                 cellInfo.value === 2 ? <img src={hexa2} className="hexa2" alt="One honey cell open" width="80" height="70"/> :

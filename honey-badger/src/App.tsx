@@ -9,14 +9,18 @@ import CellsGrid from './CellsGrid';
 
 import './App.css'
 import Header from './Header'
+import VictoryCard from './VictoryCard'
 
 function App() {
   const [count, setCount] = useState(0);
-  const row = 13;
-  const col = 13;
-  const game = gameSetup(row,col);
+  const row = 15;
+  const col = 15;
+  const [game, beePlacement] = gameSetup(row,col);
   const [cells, setCells] = useState<Map<number, CellInfo>>(game);
   const [gameOver, setGameOver] = useState(false);
+  const [gameWon, setGameWon] = useState(false);
+  const [numBees, setNumBees] = useState(beePlacement.length);
+
 
   interface CellClickEvent extends React.MouseEvent<HTMLButtonElement> {
     target: HTMLButtonElement & { value: string };
@@ -32,11 +36,20 @@ function App() {
 
   return (
     <>
+      {gameWon && <VictoryCard setGameWon={setGameWon} />}
       <section id="center">
         <div className="hero">
           <Header />
         </div>
-        <CellsGrid cells={cells} row={row} col={col} setCell={setCells} setGameOver={setGameOver}/>
+        <CellsGrid 
+          cells={cells} 
+          row={row} 
+          col={col} 
+          setCell={setCells} 
+          setGameOver={setGameOver}
+          setGameWon={setGameWon}
+        />
+        {gameOver && <div className="gameOver">Game Over!</div>}
       </section>
 
       <div className="ticks"></div>
