@@ -128,11 +128,20 @@ export function openAllCells(edges: Map<number, CellInfo>): Map<number, CellInfo
     return edges;
 }
 
-export function gameSetup(row: number, col: number): Map<number, CellInfo> {
+export function gameSetup(row: number, col: number): [Map<number, CellInfo>, number[]] {
   const [grid, numberOfCells] = createGrid(row, col);
   const edges = getEdges(grid);
   const beePlacement = asignBees(edges, numberOfCells);
   asignCellValue(edges, beePlacement);
 
-  return edges
+  return [edges, beePlacement];
+}
+
+export function checkWin(edges: Map<number, CellInfo>): boolean {
+  for (const cellInfo of edges.values()) {
+    if (!cellInfo.bee && !cellInfo.open) {
+      return false; // If there's a non-bee cell that is not open, the game is not won
+    }
+  }
+  return true; // All non-bee cells are open, the game is won
 }

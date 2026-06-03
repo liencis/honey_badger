@@ -8,10 +8,11 @@ interface CellsGridProps {
     row: number,
     col: number,
     setCell: Dispatch<SetStateAction<Map<number, CellInfo>>>,
-    setGameOver: Dispatch<SetStateAction<boolean>>
+    setGameOver: Dispatch<SetStateAction<boolean>>,
+    setGameWon: Dispatch<SetStateAction<boolean>>,
 }
 
-function CellsGrid ({cells, row, col, setCell, setGameOver}: CellsGridProps) {
+function CellsGrid ({cells, row, col, setCell, setGameOver, setGameWon}: CellsGridProps) {
     const rowArray = Array.from({length: row}, (_, i) => i); // Array.from({length: row}, (_, i) => i + 1)
     const colArray = Array.from({length: col}, (_, i) => i);
     let numCellsPlaced = 0;
@@ -35,7 +36,12 @@ function CellsGrid ({cells, row, col, setCell, setGameOver}: CellsGridProps) {
                                 value={numCellsPlaced}
                                 className="cellLi"
                                 >
-                                    <Cell cellInfo={cells.get(numCellsPlaced)} setCell={setCell} setGameOver={setGameOver}/>
+                                    <Cell 
+                                        cellInfo={cells.get(numCellsPlaced)} 
+                                        setCell={setCell} 
+                                        setGameOver={setGameOver} 
+                                        setGameWon={setGameWon}
+                                    />
                                 </li>
                         }
                     } else {
@@ -46,7 +52,12 @@ function CellsGrid ({cells, row, col, setCell, setGameOver}: CellsGridProps) {
                                 value={numCellsPlaced}
                                 className="cellLi"
                                 >
-                                    <Cell cellInfo={cells.get(numCellsPlaced)} setCell={setCell} setGameOver={setGameOver}/>
+                                    <Cell 
+                                        cellInfo={cells.get(numCellsPlaced)} 
+                                        setCell={setCell} 
+                                        setGameOver={setGameOver} 
+                                        setGameWon={setGameWon}
+                                    />
                                 </li>
                         } else {
                             return <li className="cellLi"></li>
