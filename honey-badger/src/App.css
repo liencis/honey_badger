@@ -237,12 +237,18 @@ ul {
 }
 
 .victoryCard {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
+  align-items: center;
   position: absolute;
   top: 50%;
   left: 50%;
+  height: 35%;
   transform: translate(-50%, -50%);
   background-color: white;
-  border: 2px solid var(--accent-border);
+  border: 2px solid #e58824;
   border-radius: 10px;
   padding: 20px;
   text-align: center;
@@ -250,29 +256,59 @@ ul {
 
   h2 {
     margin-top: 0;
-    color: var(--accent);
+    color: #e58824;
   }
 
   p {
-    color: var(--text);
+    color: #a76219;
     margin-bottom: 0;
   }
 
+  .buttonContainer {
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+  }
+
   button {
-    margin: 20px 10px 10px 10px;
-    padding: 10px 20px;
-    width: 35%;
+    margin: 20px 0px 10px 0px;
+    padding: 10px 10px;
+    width: 150px;
     font-size: 16px;
-    color: var(--accent);
-    background: var(--accent-bg);
-    border: 2px solid var(--accent-border);
+    color: #a76219;
+    background: #f7c76a;
+    border: 2px solid #e58824;
     border-radius: 5px;
     cursor: pointer;
     transition: background-color 0.3s, color 0.3s;
 
     &:hover {
-      background-color: var(--accent-border);
-      color: var(--accent-bg);
+      background-color: #e58824;
+      color: #f7c76a;
     }
   }
+
+  img {
+    margin: 20px 0px 10px 0px;
+    width: 95%;
+    height: auto;
+  }
+
+  @media (max-width: 1024px) {
+    .buttonContainer {
+      flex-direction: column;
+    }
+    button {
+      margin-top: 8px;
+      margin-bottom: 0px;
+    }
+  }
+}
+
+.confettiCard {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 9;
 }

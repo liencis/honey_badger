@@ -1,47 +1,39 @@
-import React, { useCallback, useRef } from 'react';
-import ReactCanvasConfetti from 'react-canvas-confetti';
-// This component is not working!
+import { useEffect } from 'react';
+import confetti from 'canvas-confetti';
+// To see the confetti and configuration options: https://ulitcos.github.io/react-canvas-confetti/
+
 export default function Confetti() {
-  const refAnimationInstance = useRef(null);
-
-  const getInstance = useCallback((instance) => {
-    refAnimationInstance.current = instance;
-  }, []);
-
-  const makeShot = useCallback((particleRatio, opts) => {
-    if (refAnimationInstance.current) {
-      refAnimationInstance.current({
-        ...opts,
-        origin: { y: 0.7 },
-        particleCount: Math.floor(200 * particleRatio),
+  const defaults = { 
+    startVelocity: 45, 
+    spread: 230, 
+    ticks: 600, 
+    zIndex: 0,
+    gravity: 0.5,
+    decay: 0.9,
+    angle: 90,
+    colors: ['#faa31b', '#f3e94c', '#f7c76a', '#f3cf80', '#e58824', '#af862d'],
+  };
+  useEffect(() => {
+    const shoot = () => {
+      confetti({
+        ...defaults,
+        particleCount: 90,
+        scalar: 1.2,
+        shapes: ['star'],
       });
-    }
+
+      confetti({
+        ...defaults,
+        particleCount: 30,
+        scalar: 0.75,
+        shapes: ['circle'],
+      });
+    };
+
+    shoot();
+    setTimeout(shoot, 200);
+    setTimeout(shoot, 400);
   }, []);
 
-  const fire = useCallback(() => {
-    makeShot(0.25, { spread: 26, startVelocity: 55 });
-    makeShot(0.2, { spread: 60 });
-    makeShot(0.35, { spread: 100, decay: 0.91, scalar: 0.8 });
-    makeShot(0.1, { spread: 120, startVelocity: 25, decay: 0.92, scalar: 1.2 });
-    makeShot(0.1, { spread: 120, startVelocity: 45 });
-  }, [makeShot]);
-
-  return (
-    <div style={{ textAlign: 'center', padding: '50px' }}>
-      <button onClick={fire} style={{ padding: '10px 20px', fontSize: '16px' }}>
-        🎉 Celebrate!
-      </button>
-      <ReactCanvasConfetti
-        style={{
-          position: 'fixed',
-          width: '100%',
-          height: '100%',
-          top: 0,
-          left: 0,
-          pointerEvents: 'none', // Allows clicking through the canvas
-          zIndex: 999,
-        }}
-      />
-    </div>
-  );
+  return null;
 }

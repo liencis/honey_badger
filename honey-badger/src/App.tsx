@@ -10,6 +10,7 @@ import CellsGrid from './CellsGrid';
 import './App.css'
 import Header from './Header'
 import VictoryCard from './VictoryCard'
+import ConfettiCard from './ConfettiCard'
 
 function App() {
   const [count, setCount] = useState(0);
@@ -36,7 +37,12 @@ function App() {
 
   return (
     <>
-      {gameWon && <VictoryCard setGameWon={setGameWon} />}
+      {gameWon && 
+        <div>
+          <ConfettiCard/> 
+          <VictoryCard setGameWon={setGameWon} />
+        </div>
+      }
       <section id="center">
         <div className="hero">
           <Header />
