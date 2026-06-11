@@ -4,6 +4,7 @@ export type CellInfo = {
     neighbors: number[];
     open: boolean;
     bee: boolean;
+    beeMarked: boolean;
 };
 
 const Level = {
@@ -64,7 +65,8 @@ function getEdges(grid: (number)[][]): Map<number, CellInfo> {
           value: 0,
           neighbors,
           open: false,
-          bee: false
+          bee: false,
+          beeMarked: false
         });
       }
     }
