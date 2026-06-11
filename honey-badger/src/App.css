@@ -21,11 +21,7 @@
   position: relative;
   transition: transform 0.3s ease-in;
   justify-self: center;
-  padding: 0px 6px 0px 6px;
-  .hexa {
-    width: 80;
-    height: auto;
-  }
+  padding: 0px;
 
   img {
     z-index: 2;
@@ -33,19 +29,6 @@
 
   p {
     position: absolute;
-
-  }
-
-  .cellInfo {
-    width: 50px;
-    height: 20px;
-    margin: 8px;
-    z-index: 1;
-    font-size: 8px;
-    color: var(--text);
-    top: 50%;
-    left: 50%;
-    pointer-events: none;
   }
 
   &:hover {
@@ -62,7 +45,6 @@ ul {
 .cellLi {
   display: inline-block;
   width: 60px;
-  height: auto;
 }
 
 
@@ -311,4 +293,10 @@ ul {
   left: 50%;
   transform: translate(-50%, -50%);
   z-index: 9;
+}
+
+.custom-menu {
+  &:hover {
+    background-color: #e0a05b;
+  }
 }

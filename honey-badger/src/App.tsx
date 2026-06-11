@@ -11,6 +11,7 @@ import './App.css'
 import Header from './Header'
 import VictoryCard from './VictoryCard'
 import ConfettiCard from './ConfettiCard'
+import DoubleClickButton from './DoubleClickButton'
 
 function App() {
   const [count, setCount] = useState(0);
@@ -47,6 +48,7 @@ function App() {
         <div className="hero">
           <Header />
         </div>
+        <h2>Bees: {numBees}</h2>
         <CellsGrid 
           cells={cells} 
           row={row} 
@@ -54,6 +56,7 @@ function App() {
           setCell={setCells} 
           setGameOver={setGameOver}
           setGameWon={setGameWon}
+          setNumBees={setNumBees}
         />
         {gameOver && <div className="gameOver">Game Over!</div>}
       </section>
