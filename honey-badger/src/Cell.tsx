@@ -54,17 +54,17 @@ function Cell({ cellInfo, setCell, setGameOver, setGameWon }: CellProps) {
             onClick={handleClick} 
         >
             { cellInfo.open ? 
-                cellInfo.bee ? <img src={hexaBee} id={`${cellInfo.number}`} className="hexaBee" alt="One honey Bee open" width="80" height="70"/> :
-                cellInfo.value === 0 ? <img src={hexaHoney} id={`${cellInfo.number}`} className="hexaHoney" alt="One honey cell open" width="80" height="70"/> :
-                cellInfo.value === 1 ? <img src={hexa1} id={`${cellInfo.number}`} className="hexa1" alt="One honey cell open" width="80" height="70"/> :
-                cellInfo.value === 2 ? <img src={hexa2} id={`${cellInfo.number}`} className="hexa2" alt="One honey cell open" width="80" height="70"/> :
-                cellInfo.value === 3 ? <img src={hexa3} id={`${cellInfo.number}`} className="hexa3" alt="One honey cell open" width="80" height="70"/> :
-                cellInfo.value === 4 ? <img src={hexa4} id={`${cellInfo.number}`} className="hexa4" alt="One honey cell open" width="80" height="70"/> :
-                cellInfo.value === 5 ? <img src={hexa5} id={`${cellInfo.number}`} className="hexa5" alt="One honey cell open" width="80" height="70"/> :
-                cellInfo.value === 6 ? <img src={hexa6} id={`${cellInfo.number}`} className="hexa6" alt="One honey cell open" width="80" height="70"/> :
-                <img src={hexa} id={`${cellInfo.number}`} className="hexa" alt="One honey cell closed" width="80" height="70"/> :
+                cellInfo.bee ? <img src={hexaBee} id={`${cellInfo.number}`} className="hexaBee" alt="One honey Bee open" width="70" height="60"/> :
+                cellInfo.value === 0 ? <img src={hexaHoney} id={`${cellInfo.number}`} className="hexaHoney" alt="One honey cell open" width="70" height="60"/> :
+                cellInfo.value === 1 ? <img src={hexa1} id={`${cellInfo.number}`} className="hexa1" alt="One honey cell open" width="70" height="60"/> :
+                cellInfo.value === 2 ? <img src={hexa2} id={`${cellInfo.number}`} className="hexa2" alt="One honey cell open" width="70" height="60"/> :
+                cellInfo.value === 3 ? <img src={hexa3} id={`${cellInfo.number}`} className="hexa3" alt="One honey cell open" width="70" height="60"/> :
+                cellInfo.value === 4 ? <img src={hexa4} id={`${cellInfo.number}`} className="hexa4" alt="One honey cell open" width="70" height="60"/> :
+                cellInfo.value === 5 ? <img src={hexa5} id={`${cellInfo.number}`} className="hexa5" alt="One honey cell open" width="70" height="60"/> :
+                cellInfo.value === 6 ? <img src={hexa6} id={`${cellInfo.number}`} className="hexa6" alt="One honey cell open" width="70" height="60"/> :
+                <img src={hexa} id={`${cellInfo.number}`} className="hexa" alt="One honey cell closed" width="70" height="60"/> :
             // Not open cell
-            <img src={cellInfo.beeMarked ? beeMarked : hexa} id={`${cellInfo.number}`} className="hexa" alt="One honey cell closed" width="80" height="70"/>
+            <img src={cellInfo.beeMarked ? beeMarked : hexa} id={`${cellInfo.number}`} className="hexa" alt="One honey cell closed" width="70" height="60"/>
             }
         </div>
     );

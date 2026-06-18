@@ -96,7 +96,7 @@ function CellsGrid ({cells, row, col, setCell, setGameOver, setGameWon, setNumBe
     }
 
     return ( 
-        <div onContextMenu={handleRightClick}>
+        <div className="cellContainer" onContextMenu={handleRightClick}>
             <p>Cell Number: {cellNumber}</p>
             {/* right clickik */}
             {visible && (
