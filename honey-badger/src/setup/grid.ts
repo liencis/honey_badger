@@ -7,7 +7,7 @@ export type CellInfo = {
     beeMarked: boolean;
 };
 
-const Level = {
+export const Level = {
   easy: 8,
   normal: 6,
   hard: 5,
@@ -75,7 +75,10 @@ function getEdges(grid: (number)[][]): Map<number, CellInfo> {
   return edges;
 }
 
-function asignBees(edges: Map<number, CellInfo>, numberOfCells: number, level: typeof Level[keyof typeof Level] = Level.easy): number[] {
+function asignBees(
+  edges: Map<number, CellInfo>, 
+  numberOfCells: number, 
+  level: typeof Level[keyof typeof Level] = Level.easy): number[] {
   // to prevent infinite loop we calculate number of bees to avaid bad(to big) number pased.
   let numBees = Math.ceil(edges.size / level);
   let beesList: number[] = [];
@@ -130,10 +133,15 @@ export function openAllCells(edges: Map<number, CellInfo>): Map<number, CellInfo
     return edges;
 }
 
-export function gameSetup(row: number, col: number): [Map<number, CellInfo>, number[]] {
+export function gameSetup(
+  row: number, 
+  col: number, 
+  level: typeof Level[keyof typeof Level]
+): [Map<number, CellInfo>, number[]] {
+
   const [grid, numberOfCells] = createGrid(row, col);
   const edges = getEdges(grid);
-  const beePlacement = asignBees(edges, numberOfCells);
+  const beePlacement = asignBees(edges, numberOfCells, level);
   asignCellValue(edges, beePlacement);
 
   return [edges, beePlacement];

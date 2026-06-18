@@ -1,9 +1,7 @@
 import { useState, useEffect } from 'react'
 import reactLogo from './assets/react.svg'
 import viteLogo from './assets/vite.svg'
-import heroImg from './assets/hero.png'
-import hexaBee from './assets/hexaBee.svg'
-import { gameSetup } from './setup/grid';
+import { gameSetup, Level } from './setup/grid';
 import type { CellInfo } from './setup/grid';
 import CellsGrid from './CellsGrid';
 
@@ -11,30 +9,44 @@ import './App.css'
 import Header from './Header'
 import VictoryCard from './VictoryCard'
 import ConfettiCard from './ConfettiCard'
-import DoubleClickButton from './DoubleClickButton'
+import GameOverCard from './GameOverCard'
+import BeeAttack from './BeeAttack'
 
 function App() {
   const [count, setCount] = useState(0);
   const row = 15;
   const col = 15;
-  const [game, beePlacement] = gameSetup(row,col);
+  const [game, beePlacement] = gameSetup(row, col, Level.easy);
   const [cells, setCells] = useState<Map<number, CellInfo>>(game);
   const [gameOver, setGameOver] = useState(false);
   const [gameWon, setGameWon] = useState(false);
   const [numBees, setNumBees] = useState(beePlacement.length);
+  const [score, setScore] = useState(0);
+  const [level, setLevel] = useState(Level.easy);
 
 
   interface CellClickEvent extends React.MouseEvent<HTMLButtonElement> {
     target: HTMLButtonElement & { value: string };
   }
 
-
-  // Object.entries(cells) DOES NOT WORK!
-  // const Cells = [...cells].map(([key, value]) => {
-  //   const item = `Item ${key} ${JSON.stringify(value)}`;
-  //   return (<Cell cellInfo={value}/>)
-  // })
-
+  useEffect(() => {
+    if (gameWon === true) {
+      setScore(prev => {
+        let numCells = cells.size;
+        let multiply = 1;
+        if (level === Level.easy) {
+          multiply = 4
+        } else if (level === Level.normal) {
+          multiply = 5
+        } else if (level === Level.hard) {
+          multiply = 6
+        } else {
+          multiply = 8
+        }
+        return prev + (numCells * multiply)
+      })
+    }
+  }, [gameWon]);
 
   return (
     <>
@@ -44,11 +56,24 @@ function App() {
           <VictoryCard setGameWon={setGameWon} />
         </div>
       }
+      {
+        gameOver && 
+        <div>
+          <BeeAttack/>
+          <GameOverCard setGameOver={setGameOver}/>
+        </div>
+      }
       <section id="center">
         <div className="hero">
-          <Header />
+          <Header gameOver={gameOver}/>
         </div>
-        <h2>Bees: {numBees}</h2>
+        <div className='dataTablo'>
+          <ul className='dataTabloList'>
+            <li>Player: {"Player Name"}</li>
+            <li>Bees: {numBees}</li>
+            <li>Score: {score}</li>
+          </ul>
+        </div>
         <CellsGrid 
           cells={cells} 
           row={row} 
@@ -58,7 +83,6 @@ function App() {
           setGameWon={setGameWon}
           setNumBees={setNumBees}
         />
-        {gameOver && <div className="gameOver">Game Over!</div>}
       </section>
 
       <div className="ticks"></div>
