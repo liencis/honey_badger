@@ -17,6 +17,78 @@
   }
 }
 
+.navbarContainer {
+  display: flex;
+  position: fixed;
+  left: 0;
+  z-index: 11;
+}
+
+.navbarNarow {
+  display: flex;
+  height: 100%;
+  width: 60px;
+  background-color: white;
+  position: fixed;
+  justify-content: center;
+  padding: 10px;
+  flex-direction: column;
+}
+
+.navbarWide {
+  display: flex;
+  height: 100%;
+  width: 200px;
+  background-color: white;
+  position: fixed;
+  justify-content: center;
+  padding: 10px;
+  flex-direction: column;
+  align-items: start;
+}
+
+.navbarItem {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 300px;
+}
+
+.navbarItems {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 10px;
+  padding: 10px;
+}
+
+.navbarItems img {
+  width: 40px;
+  height: 40px;
+}
+
+.navbarChoices {
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  gap: 10px;
+  padding: 10px;
+  margin-left: 30px;
+}
+
+.choice {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 10px;
+  padding: 5px;
+  border-radius: 5px;
+
+  &:hover {
+    background-color: #ebebeb;
+  }
+}
+
 .cell {
   position: relative;
   transition: transform 0.3s ease-in;
@@ -36,12 +108,12 @@
   }
 }
 
- ul {
-    list-style-type: none;
-    padding: 0;
-    /* to regulate cell placment verticaly */
-    margin: 0 2px -36px 2px;
-  }
+ul {
+  list-style-type: none;
+  padding: 0;
+  /* to regulate cell placment verticaly */
+  margin: 0 2px -36px 2px;
+}
 
 .cellLi {
   display: inline-block;
@@ -214,7 +286,7 @@
 
   &::before,
   &::after {
-    content: '';
+    content: "";
     position: absolute;
     top: -4.5px;
     border: 5px solid transparent;
@@ -280,7 +352,9 @@
     border: 2px solid #7d5c3d;
     border-radius: 5px;
     cursor: pointer;
-    transition: background-color 0.3s, color 0.3s;
+    transition:
+      background-color 0.3s,
+      color 0.3s;
 
     &:hover {
       background-color: #7d5c3d;
@@ -333,7 +407,9 @@
     border: 2px solid #e58824;
     border-radius: 5px;
     cursor: pointer;
-    transition: background-color 0.3s, color 0.3s;
+    transition:
+      background-color 0.3s,
+      color 0.3s;
 
     &:hover {
       background-color: #e58824;
@@ -383,43 +459,42 @@
 .BeeAttack {
   display: flex;
   position: absolute;
-	justify-content: space-between;
+  justify-content: space-between;
   bottom: 20%;
   left: 10%;
   width: 80%;
   height: 100%;
   background-color: none;
-	margin: 0;
-	padding: 0;
-	overflow: hidden;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
   z-index: 9;
 }
 
 .gameEndBee {
   display: inline-block;
-	opacity: 0;
-	margin: 0;
-	padding: 0;
-	animation: fall 5s linear 3s;
+  opacity: 0;
+  margin: 0;
+  padding: 0;
+  animation: fall 5s linear 3s;
   animation-direction: alternate-reverse;
 }
 
 @keyframes fall {
   0% {
-		opacity: 0;
-	}
+    opacity: 0;
+  }
 
-	3% {
-		opacity: 0.9;
-	}
+  3% {
+    opacity: 0.9;
+  }
 
-	90% {
-		opacity: 0.9;
-	}
+  90% {
+    opacity: 0.9;
+  }
 
-	100% {
-		transform: translate(0, 97vh);
-		opacity: 0;
-	}
+  100% {
+    transform: translate(0, 97vh);
+    opacity: 0;
+  }
 }
-
