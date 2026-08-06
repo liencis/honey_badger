@@ -50,7 +50,7 @@
 .navbarItem {
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: start;
   height: 300px;
 }
 

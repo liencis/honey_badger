@@ -40,6 +40,15 @@ function CellsGrid({
 
   const [isHovered, setIsHovered] = useState(false);
   const [isHoveredUnmark, setIsHoveredUnmark] = useState(false);
+  const CellInfoDefault: CellInfo = {
+    number: 0,
+    value: 0,
+    bee: false,
+    open: false,
+    beeMarked: false,
+    neighbors: [],
+  };
+  console.log("CellsGrid rendered: ", cells, row, col);
 
   // Close the custom menu when clicking outside of it
   useEffect(() => {
@@ -176,7 +185,7 @@ function CellsGrid({
                       id={`${numCellsPlaced}`}
                     >
                       <Cell
-                        cellInfo={cells.get(numCellsPlaced)}
+                        cellInfo={cells.get(numCellsPlaced) || CellInfoDefault}
                         setCell={setCell}
                         setGameOver={setGameOver}
                         setGameWon={setGameWon}
@@ -195,7 +204,7 @@ function CellsGrid({
                       id={`${numCellsPlaced}`}
                     >
                       <Cell
-                        cellInfo={cells.get(numCellsPlaced)}
+                        cellInfo={cells.get(numCellsPlaced) || CellInfoDefault}
                         setCell={setCell}
                         setGameOver={setGameOver}
                         setGameWon={setGameWon}

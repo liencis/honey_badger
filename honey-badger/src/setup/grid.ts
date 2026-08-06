@@ -1,10 +1,10 @@
 export type CellInfo = {
-    number: number;
-    value: number;
-    neighbors: number[];
-    open: boolean;
-    bee: boolean;
-    beeMarked: boolean;
+  number: number;
+  value: number;
+  neighbors: number[];
+  open: boolean;
+  bee: boolean;
+  beeMarked: boolean;
 };
 
 export const Level = {
@@ -12,10 +12,12 @@ export const Level = {
   normal: 6,
   hard: 5,
   bad: 4,
-} as const
+} as const;
 
-function createGrid(rows: number, cols: number): [(number)[][], number] {
-  let grid: (number)[][] = Array.from({ length: rows }, () => Array(cols).fill(0));
+function createGrid(rows: number, cols: number): [number[][], number] {
+  let grid: number[][] = Array.from({ length: rows }, () =>
+    Array(cols).fill(0),
+  );
   let num: number = 1;
 
   grid = grid.map((row, i) => {
@@ -36,13 +38,12 @@ function createGrid(rows: number, cols: number): [(number)[][], number] {
   return [grid, num - 1];
 }
 
-function getEdges(grid: (number)[][]): Map<number, CellInfo> {
+function getEdges(grid: number[][]): Map<number, CellInfo> {
   const edges = new Map<number, CellInfo>();
-  
-  for (let r_idx = 0; r_idx < grid.length; r_idx++) {
 
+  for (let r_idx = 0; r_idx < grid.length; r_idx++) {
     let idx = r_idx % 2 === 0 ? 1 : 0; // Start from 1 for even rows, 0 for odd rows
-    for (let c_idx = idx; c_idx < grid[r_idx].length; c_idx+=2) {
+    for (let c_idx = idx; c_idx < grid[r_idx].length; c_idx += 2) {
       if (grid[r_idx][c_idx] !== 0) {
         const neighbors: number[] = [];
         const neighborIdxs = [
@@ -51,7 +52,7 @@ function getEdges(grid: (number)[][]): Map<number, CellInfo> {
           [r_idx - 1, c_idx - 1], // Left Diagonal Up
           [r_idx - 1, c_idx + 1], // Right Diagonal Up
           [r_idx + 1, c_idx - 1], // Left Diagonal Down
-          [r_idx + 1, c_idx + 1]  // Right Diagonal Down
+          [r_idx + 1, c_idx + 1], // Right Diagonal Down
         ];
 
         for (const [nr, nc] of neighborIdxs) {
@@ -66,7 +67,7 @@ function getEdges(grid: (number)[][]): Map<number, CellInfo> {
           neighbors,
           open: false,
           bee: false,
-          beeMarked: false
+          beeMarked: false,
         });
       }
     }
@@ -76,69 +77,75 @@ function getEdges(grid: (number)[][]): Map<number, CellInfo> {
 }
 
 function asignBees(
-  edges: Map<number, CellInfo>, 
-  numberOfCells: number, 
-  level: typeof Level[keyof typeof Level] = Level.easy): number[] {
+  edges: Map<number, CellInfo>,
+  numberOfCells: number,
+  level: (typeof Level)[keyof typeof Level] = Level.easy,
+): number[] {
   // to prevent infinite loop we calculate number of bees to avaid bad(to big) number pased.
   let numBees = Math.ceil(edges.size / level);
   let beesList: number[] = [];
   while (numBees > 0) {
-      let randomCellNumber = Math.floor(Math.random() * numberOfCells) + 1;
-      const cellInfo = edges.get(randomCellNumber);
-      if (cellInfo && !cellInfo.bee) {
-          cellInfo.bee = true;
-          beesList.push(randomCellNumber);
-          numBees--;
-      }
+    let randomCellNumber = Math.floor(Math.random() * numberOfCells) + 1;
+    const cellInfo = edges.get(randomCellNumber);
+    if (cellInfo && !cellInfo.bee) {
+      cellInfo.bee = true;
+      beesList.push(randomCellNumber);
+      numBees--;
+    }
   }
   return beesList;
 }
 
-function asignCellValue(edges: Map<number, CellInfo>, beePlacement: number[]): void {
-    for (const cellNumber of beePlacement) {
-        const cellInfo = edges.get(cellNumber);
-        if (cellInfo) {
-            for (const neighbor of cellInfo.neighbors) {
-                const neighborInfo = edges.get(neighbor);
-                if (neighborInfo && !neighborInfo.bee) {
-                    neighborInfo.value += 1;
-                }
-            }
+function asignCellValue(
+  edges: Map<number, CellInfo>,
+  beePlacement: number[],
+): void {
+  for (const cellNumber of beePlacement) {
+    const cellInfo = edges.get(cellNumber);
+    if (cellInfo) {
+      for (const neighbor of cellInfo.neighbors) {
+        const neighborInfo = edges.get(neighbor);
+        if (neighborInfo && !neighborInfo.bee) {
+          neighborInfo.value += 1;
         }
+      }
     }
+  }
 }
 
 export function openCell(
-  cellNumber: number, 
-  edges: Map<number, CellInfo>): Map<number, CellInfo> {
-    const cellInfo = edges.get(cellNumber);
-    if (cellInfo) {
-        cellInfo.open = true; /// ? this might need to be set at jsx level instead of here, but for now we can set it here
-        if (cellInfo.value === 0 && !cellInfo.bee) {
-            for (const neighbor of cellInfo.neighbors) {
-                const neighborInfo = edges.get(neighbor);
-                if (neighborInfo && !neighborInfo.open) {
-                    openCell(neighbor, edges);
-                }
-            }
+  cellNumber: number,
+  edges: Map<number, CellInfo>,
+): Map<number, CellInfo> {
+  const cellInfo = edges.get(cellNumber);
+  if (cellInfo) {
+    cellInfo.open = true; /// ? this might need to be set at jsx level instead of here, but for now we can set it here
+    if (cellInfo.value === 0 && !cellInfo.bee) {
+      for (const neighbor of cellInfo.neighbors) {
+        const neighborInfo = edges.get(neighbor);
+        if (neighborInfo && !neighborInfo.open) {
+          openCell(neighbor, edges);
         }
+      }
     }
-    return edges;
+  }
+  return edges;
 }
 
-export function openAllCells(edges: Map<number, CellInfo>): Map<number, CellInfo> {
-    for (const cellInfo of edges.values()) {
-        cellInfo.open = true;
-    }
-    return edges;
+export function openAllCells(
+  edges: Map<number, CellInfo>,
+): Map<number, CellInfo> {
+  for (const cellInfo of edges.values()) {
+    cellInfo.open = true;
+  }
+  return edges;
 }
 
 export function gameSetup(
-  row: number, 
-  col: number, 
-  level: typeof Level[keyof typeof Level]
+  row: number,
+  col: number,
+  level: (typeof Level)[keyof typeof Level],
 ): [Map<number, CellInfo>, number[]] {
-
   const [grid, numberOfCells] = createGrid(row, col);
   const edges = getEdges(grid);
   const beePlacement = asignBees(edges, numberOfCells, level);

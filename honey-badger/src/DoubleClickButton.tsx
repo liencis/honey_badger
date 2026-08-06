@@ -33,22 +33,21 @@ function DoubleClickButton() {
     return () => window.removeEventListener("click", handleClick);
   }, []);
 
-
   const doDoubleClick = () => {
     setIsHoney(true);
-  }
+  };
 
   const doSingleClick = () => {
     setIsHoney(false);
-  }
+  };
 
   const handleRightClick = (e) => {
     e.preventDefault(); // Prevent default behavior (e.g., context menu on right-click)
     setPoints({ x: e.clientX, y: e.clientY }); // get click coordinates
     setVisible(true); // show custom menu
-  }
+  };
 
-  const handleClick = (e: { preventDefault: () => void; type: string; }) => {
+  const handleClick = (e: { preventDefault: () => void; type: string }) => {
     e.preventDefault(); // Prevent default behavior (e.g., context menu on right-click)
     if (e.type === "click") {
       setClickCount((prev) => prev + 1);
@@ -59,32 +58,50 @@ function DoubleClickButton() {
 
   return (
     <div>
-        <p>{isHoney ? "Honey!" : "Click me!"}</p>
-        <div className="double-click-button" 
-            onContextMenu={handleRightClick}
-        >
-          {visible && (
-            <ul className="custom-menu" 
-              style={{ 
-                top: points.y, 
-                left: points.x,
-                position: "absolute",
-                backgroundColor: "#fff",
-                border: "1px solid #ccc",
-                listStyle: "none",
-                padding: "10px",
-                margin: 0,
-                boxShadow: "2px 2px 5px rgba(0,0,0,0.2)",
+      <p>{isHoney ? "Honey!" : "Click me!"}</p>
+      <div className="double-click-button" onContextMenu={handleRightClick}>
+        {visible && (
+          <ul
+            className="custom-menu"
+            style={{
+              top: points.y,
+              left: points.x,
+              position: "absolute",
+              backgroundColor: "#fff",
+              border: "1px solid #ccc",
+              listStyle: "none",
+              padding: "10px",
+              margin: 0,
+              boxShadow: "2px 2px 5px rgba(0,0,0,0.2)",
+            }}
+          >
+            <li
+              onClick={() => {
+                setIsHoney(true);
+                setVisible(false);
               }}
             >
-              <li onClick={() => { setIsHoney(true); setVisible(false); }}>Mark as Honey</li>
-              <li onClick={() => { setIsHoney(false); setVisible(false); }}>Unmark as Honey</li>
-            </ul>
-          )}
-            <img src={isHoney ? hexaHoney : hexa} alt="Hexa" width="80" height="70"/>
-        </div>
+              Mark as Honey
+            </li>
+            <li
+              onClick={() => {
+                setIsHoney(false);
+                setVisible(false);
+              }}
+            >
+              Unmark as Honey
+            </li>
+          </ul>
+        )}
+        <img
+          src={isHoney ? hexaHoney : hexa}
+          alt="Hexa"
+          width="80"
+          height="70"
+        />
+      </div>
     </div>
   );
-}   
+}
 
 export default DoubleClickButton;

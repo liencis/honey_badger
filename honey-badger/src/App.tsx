@@ -3,6 +3,7 @@ import {
   useEffect,
   useCallback,
   useMemo,
+  useReducer,
   useDeferredValue,
 } from "react";
 import reactLogo from "./assets/react.svg";
@@ -21,6 +22,8 @@ import Navbar from "./Navbar";
 
 function App() {
   const [gameLevel, setGameLevel] = useState(Level.easy);
+  const [row, setRow] = useState(15);
+  const [col, setCol] = useState(15);
   const [gameDimensions, setGameDimensions] = useState({ row: 15, col: 15 });
   const deferredDimensions = useDeferredValue(gameDimensions);
   const [game, beePlacement] = gameSetup(
@@ -40,11 +43,7 @@ function App() {
   }
 
   const startNewGame = () => {
-    const [newGame, newBeePlacement] = gameSetup(
-      gameDimensions.row,
-      gameDimensions.col,
-      gameLevel,
-    );
+    const [newGame, newBeePlacement] = gameSetup(row, col, gameLevel);
     setCells(newGame);
     setNumBees(newBeePlacement.length);
     setGameOver(false);
@@ -53,7 +52,7 @@ function App() {
 
   useEffect(() => {
     startNewGame();
-  }, [gameDimensions, gameLevel]);
+  }, [row, col, gameLevel]);
 
   useEffect(() => {
     if (gameWon === true) {
@@ -84,6 +83,10 @@ function App() {
         gameLevel={gameLevel}
         setGameDimensions={setGameDimensions}
         gameDimensions={gameDimensions}
+        setRow={setRow}
+        setCol={setCol}
+        row={row}
+        col={col}
       />
       {gameWon && (
         <div>
@@ -111,8 +114,8 @@ function App() {
         </div>
         <CellsGrid
           cells={cells}
-          row={deferredDimensions.row}
-          col={deferredDimensions.col}
+          row={row}
+          col={col}
           setCell={setCells}
           setGameOver={setGameOver}
           setGameWon={setGameWon}
