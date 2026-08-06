@@ -12,6 +12,10 @@ interface NavbarProps {
     React.SetStateAction<{ row: number; col: number }>
   >;
   gameDimensions?: { row: number; col: number };
+  setRow: React.Dispatch<React.SetStateAction<number>>;
+  setCol: React.Dispatch<React.SetStateAction<number>>;
+  row: number;
+  col: number;
 }
 
 function Navbar({
@@ -20,8 +24,10 @@ function Navbar({
   onMouseLeave,
   setGameLevel,
   gameLevel,
-  setGameDimensions,
-  gameDimensions,
+  setRow,
+  setCol,
+  row,
+  col,
 }: NavbarProps) {
   return (
     <div
@@ -40,6 +46,42 @@ function Navbar({
                 alt="cell grid size"
               />
               <p>Grid Size</p>
+            </div>
+            <div className="navbarChoices">
+              <div className="choice">
+                <label htmlFor="row">
+                  <input
+                    type="range"
+                    id="row"
+                    name="gridSizeRow"
+                    min="9"
+                    max="31"
+                    step="2"
+                    value={row}
+                    onChange={(e) => {
+                      setRow(parseInt(e.target.value));
+                    }}
+                  />
+                  rows: {row}
+                </label>
+              </div>
+              <div className="choice">
+                <label htmlFor="col">
+                  <input
+                    type="range"
+                    id="col"
+                    name="gridSizeCol"
+                    min="5"
+                    max="21"
+                    step="2"
+                    value={col}
+                    onChange={(e) => {
+                      setCol(parseInt(e.target.value));
+                    }}
+                  />
+                  columns: {col}
+                </label>
+              </div>
             </div>
           </div>
           <div className="navbarItem">
