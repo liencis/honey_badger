@@ -1,5 +1,6 @@
 import beeIcon from "./assets/beeIcon.svg";
 import gridSizeIcon from "./assets/gridSizeIcon.svg";
+import howToIcon from "./assets/howToIcon.svg";
 import { Level } from "./setup/grid";
 
 interface NavbarProps {
@@ -16,6 +17,7 @@ interface NavbarProps {
   setCol: React.Dispatch<React.SetStateAction<number>>;
   row: number;
   col: number;
+  setSlideshow: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 function Navbar({
@@ -28,6 +30,7 @@ function Navbar({
   setCol,
   row,
   col,
+  setSlideshow,
 }: NavbarProps) {
   return (
     <div
@@ -149,6 +152,26 @@ function Navbar({
               </div>
             </div>
           </div>
+          <div className="navbarItem">
+            <div className="navbarItems">
+              <img src={howToIcon} width="40" height="40" alt="how to play" />
+              <p>How to Play</p>
+            </div>
+            <div className="navbarChoices">
+              <div className="choice">
+                <label htmlFor="howToPlay">
+                  <input
+                    type="radio"
+                    id="howToPlay"
+                    name="howToPlay"
+                    value="How to Play"
+                    onChange={() => setSlideshow(true)}
+                  />
+                  Slideshow
+                </label>
+              </div>
+            </div>
+          </div>
         </div>
       ) : (
         <div className="navbarNarow">
@@ -171,6 +194,11 @@ function Navbar({
                 height="40"
                 alt="difficulty level"
               />
+            </div>
+          </div>
+          <div className="navbarItem">
+            <div className="navbarItems">
+              <img src={howToIcon} width="40" height="40" alt="how to play" />
             </div>
           </div>
         </div>
