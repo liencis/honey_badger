@@ -124,8 +124,7 @@ function CellsGrid({
 
   return (
     <div className="cellContainer" onContextMenu={handleRightClick}>
-      <p>Cell Number: {cellNumber}</p>
-      {/* right clickik */}
+      {/* <p>Cell Number: {cellNumber}</p> */}
       {visible && (
         <ul
           className="custom-menu"
