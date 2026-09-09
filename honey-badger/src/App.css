@@ -604,3 +604,8 @@ ul {
     opacity: 0;
   }
 }
+
+.copyright {
+  margin: 3px;
+  font-size: 10px;
+}
