@@ -60,7 +60,7 @@ function CellsGrid({
   const handleRightClick = (e: React.MouseEvent<HTMLDivElement>) => {
     e.preventDefault(); // Prevent default behavior (e.g., context menu on right-click)
     setPoints({ x: e.clientX, y: e.clientY }); // get click coordinates
-    setCellNumber(Number(e.target["id"]));
+    setCellNumber(Number((e.target as HTMLDivElement).id));
     setVisible(true); // show custom menu
   };
 
@@ -76,13 +76,13 @@ function CellsGrid({
           return 0;
         });
       }
-    }
-    setCell((prevCells) => {
-      const newCells = new Map(prevCells);
-      newCells.set(Number(cellNumber), cellInfo);
-      return newCells;
-    });
 
+      setCell((prevCells) => {
+        const newCells = new Map(prevCells);
+        newCells.set(Number(cellNumber), cellInfo);
+        return newCells;
+      });
+    }
     setVisible(false);
   };
 
@@ -93,12 +93,12 @@ function CellsGrid({
         cellInfo.beeMarked = false;
         setNumBees((prevNum) => prevNum + 1);
       }
+      setCell((prevCells) => {
+        const newCells = new Map(prevCells);
+        newCells.set(Number(cellNumber), cellInfo);
+        return newCells;
+      });
     }
-    setCell((prevCells) => {
-      const newCells = new Map(prevCells);
-      newCells.set(Number(cellNumber), cellInfo);
-      return newCells;
-    });
     setVisible(false);
   };
 

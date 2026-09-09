@@ -41,7 +41,7 @@ function DoubleClickButton() {
     setIsHoney(false);
   };
 
-  const handleRightClick = (e) => {
+  const handleRightClick = (e: React.MouseEvent) => {
     e.preventDefault(); // Prevent default behavior (e.g., context menu on right-click)
     setPoints({ x: e.clientX, y: e.clientY }); // get click coordinates
     setVisible(true); // show custom menu

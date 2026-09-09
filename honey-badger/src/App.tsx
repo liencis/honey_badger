@@ -13,7 +13,9 @@ import Navbar from "./Navbar";
 import Slideshow from "./Slideshow";
 
 function App() {
-  const [gameLevel, setGameLevel] = useState(Level.easy);
+  const [gameLevel, setGameLevel] = useState<
+    (typeof Level)[keyof typeof Level]
+  >(Level.easy);
   const [row, setRow] = useState(15);
   const [col, setCol] = useState(15);
   const [gameDimensions, setGameDimensions] = useState({ row: 15, col: 15 });
@@ -116,30 +118,34 @@ function App() {
 
       <section id="next-steps">
         <div id="social">
-          <svg className="icon" role="presentation" aria-hidden="true">
-            <use href="/icons.svg#social-icon"></use>
-          </svg>
           <h2>Connect with us</h2>
           <p>Join the Honey Badger community</p>
-          {/* <ul>
+          <ul>
             <li>
-              <a href="https://github.com/vitejs/vite" target="_blank">
+              <a
+                href="https://www.instagram.com/honeybadger_game?stkn=MXd4ZjVtYWIyNW55ZA=="
+                target="_blank"
+              >
                 <svg
                   className="button-icon"
                   role="presentation"
                   aria-hidden="true"
+                  width="18"
+                  height="18"
                 >
-                  <use href="/icons.svg#github-icon"></use>
+                  <use href="/Instagram_logo_2016.svg"></use>
                 </svg>
-                GitHub
+                Instagram
               </a>
             </li>
-          </ul> */}
+          </ul>
         </div>
       </section>
 
       <div className="ticks"></div>
-      <section id="spacer"></section>
+      <section id="spacer" className="copyright">
+        <p>© 2026 Liene Zegele. All rights reserved.</p>
+      </section>
     </>
   );
 }

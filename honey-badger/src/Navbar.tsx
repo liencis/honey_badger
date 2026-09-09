@@ -7,8 +7,10 @@ interface NavbarProps {
   navbarExpand: boolean;
   onMouseEnter?: () => void;
   onMouseLeave?: () => void;
-  setGameLevel?: React.Dispatch<React.SetStateAction<number | typeof Level>>;
-  gameLevel?: number | typeof Level;
+  setGameLevel: React.Dispatch<
+    React.SetStateAction<(typeof Level)[keyof typeof Level]>
+  >;
+  gameLevel: (typeof Level)[keyof typeof Level];
   setGameDimensions?: React.Dispatch<
     React.SetStateAction<{ row: number; col: number }>
   >;
