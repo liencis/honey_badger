@@ -19,6 +19,7 @@ interface CellsGridProps {
   setGameOver: Dispatch<SetStateAction<boolean>>;
   setGameWon: Dispatch<SetStateAction<boolean>>;
   setNumBees: Dispatch<SetStateAction<number>>;
+  setShowWarning: Dispatch<SetStateAction<boolean>>;
 }
 
 function CellsGrid({
@@ -29,6 +30,7 @@ function CellsGrid({
   setGameOver,
   setGameWon,
   setNumBees,
+  setShowWarning,
 }: CellsGridProps) {
   const rowArray = Array.from({ length: row }, (_, i) => i); // Array.from({length: row}, (_, i) => i + 1)
   const colArray = Array.from({ length: col }, (_, i) => i);
@@ -70,10 +72,14 @@ function CellsGrid({
       if (cellInfo.open === false) {
         cellInfo.beeMarked = true;
         setNumBees((prevNum) => {
-          if (prevNum > 0) {
-            return prevNum - 1;
+          if (prevNum === 0) {
+            setShowWarning(true);
+
+            setTimeout(() => {
+              setShowWarning(false);
+            }, 9000);
           }
-          return 0;
+          return prevNum - 1;
         });
       }
 
