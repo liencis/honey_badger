@@ -11,6 +11,7 @@ import GameOverCard from "./GameOverCard";
 import BeeAttack from "./BeeAttack";
 import Navbar from "./Navbar";
 import Slideshow from "./Slideshow";
+import WarningCard from "./WarningCard";
 
 function App() {
   const [gameLevel, setGameLevel] = useState<
@@ -31,6 +32,7 @@ function App() {
   const [score, setScore] = useState(0);
   const [navbarExpand, setNavbarExpand] = useState(false);
   const [slideshow, setSlideshow] = useState(false);
+  const [showWarning, setShowWarning] = useState(false);
 
   const startNewGame = () => {
     const [newGame, newBeePlacement] = gameSetup(row, col, gameLevel);
@@ -91,6 +93,7 @@ function App() {
           <GameOverCard setGameOver={setGameOver} startNewGame={startNewGame} />
         </div>
       )}
+      {showWarning && <WarningCard setShowWarning={setShowWarning} />}
       {slideshow && <Slideshow setSlideshow={setSlideshow} />}
       <section id="center">
         <div className="hero" onClick={startNewGame}>
@@ -99,7 +102,9 @@ function App() {
 
         <div className="dataTablo">
           <ul className="dataTabloList">
-            <li>Bees: {numBees}</li>
+            <li style={{ color: numBees < 0 ? "#d01500" : "#a76219" }}>
+              Bees: {numBees}
+            </li>
             <li>Score: {score}</li>
           </ul>
         </div>
@@ -111,6 +116,7 @@ function App() {
           setGameOver={setGameOver}
           setGameWon={setGameWon}
           setNumBees={setNumBees}
+          setShowWarning={setShowWarning}
         />
       </section>
 
